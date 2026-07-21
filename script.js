@@ -22,7 +22,7 @@ map.addControl(new mapboxgl.GeolocateControl({
 map.on('load', () => {
 
     // クリック
-    map.on('click', 'fd42479d8f62b097d0aa(1)', (e) => {
+    map.on('click', 'fd42479d8f62b097d0aa (1)', (e) => {
 
         const p = e.features[0].properties;
 
@@ -35,7 +35,7 @@ map.on('load', () => {
     });
 
     // カーソル変更
-    map.on('mouseenter', 'fd42479d8f62b097d0aa(1)', () => {
+    map.on('mouseenter', 'fd42479d8f62b097d0aa (1)', () => {
         map.getCanvas().style.cursor = 'pointer';
     });
 
