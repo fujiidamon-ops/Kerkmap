@@ -25,7 +25,7 @@ map.on('load', () => {
     map.on('click', 'fd42479d8f62b097d0aa(1)', (e) => {
 
         const p = e.features[0].properties;
-        console.log(p);
+        console.table(p);
 new mapboxgl.Popup({
     closeButton: true,
     closeOnClick: true,
