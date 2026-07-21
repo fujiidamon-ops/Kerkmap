@@ -28,3 +28,24 @@ map.addControl(new mapboxgl.GeolocateControl({
     },
     trackUserLocation:true
 }));
+// 教会をクリックしたらポップアップを表示
+map.on('click', 'fd42479d8f62b097d0aa(1)', (e) => {
+
+    const properties = e.features[0].properties;
+
+    new mapboxgl.Popup()
+        .setLngLat(e.lngLat)
+        .setHTML(`
+            <h3>${properties.Name}</h3>
+        `)
+        .addTo(map);
+
+});
+// マウスを乗せるとカーソルを変える
+map.on('mouseenter', 'fd42479d8f62b097d0aa(1)', () => {
+    map.getCanvas().style.cursor = 'pointer';
+});
+
+map.on('mouseleave', 'fd42479d8f62b097d0aa(1)', () => {
+    map.getCanvas().style.cursor = '';
+});
