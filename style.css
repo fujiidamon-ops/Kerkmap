@@ -109,6 +109,7 @@ body{
     background:#163da8;
 
 }
-#map {
-    filter: grayscale(100%);
+/* 地図のキャンバス要素とその中身を強制的にモノクロにする */
+#map canvas, .mapboxgl-canvas {
+    filter: grayscale(100%) !important;
 }
