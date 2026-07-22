@@ -3,8 +3,12 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY2hhY2hhMzI4IiwiYSI6ImNtcWFnYTcyNDA2Z2MycnBwN
 
 const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/light-v11', // 👈 ここを「light-v11」に変更
-    center: [5.2913, 52.1326],
+    const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/chacha328/cmr7bti6i004a01rd8c7eb7rk', // 👈 元のURLに戻す
+    center: [5.3, 52.1], // オランダの中心に戻す
+    zoom: 7
+});
     zoom: 7
 });
 
