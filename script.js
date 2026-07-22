@@ -16,43 +16,38 @@ map.addControl(new mapboxgl.GeolocateControl({
     trackUserLocation: true
 }));
 
-// ★Studioで設定した「正確なレイヤー名」
-// ※もし前回の「fd42479d8f62b097d0aa(1)」のままであれば、ここを書き換えてください。
-const layerId = 'church_pins'; 
-
 map.on('load', () => {
-    // データソースを取得（絞り込みで何度も使うため）
-    const source = map.getSource(map.getLayer(layerId).source);
-
-    // 🔍 検索機能の実装
     const searchBox = document.getElementById('search-box');
 
-    // 文字が入力されるたびに実行
+    // 🔍 検索・絞り込み機能（エラーを起こさない安全な実装）
     searchBox.addEventListener('input', (e) => {
-        const value = e.target.value.trim().toLowerCase(); // 入力された文字を小文字に統一
+        const value = e.target.value.trim().toLowerCase();
 
         // 検索窓が空なら、すべてのピンを表示して終了
         if (value === "") {
-            map.setFilter(layerId, null);
+            map.setFilter('church_pins', null);
             return;
         }
 
-        // CSVの項目（Name, JP, Architect）の中に、入力文字が含まれているかチェックするフィルターを作成
+        // エラーを回避するため、大文字小文字を区別せず部分一致させる「in」構文を採用
         const filter = ['any',
-            ['ilike', ['get', 'Name'], value],        // 英語名
-            ['ilike', ['get', 'JP'], value],          // 日本語名
-            ['ilike', ['get', 'Architect'], value]    // 建築家名
+            ['in', value, ['downcase', ['coalesce', ['get', 'Name'], '']]],
+            ['in', value, ['downcase', ['coalesce', ['get', 'JP'], '']]],
+            ['in', value, ['downcase', ['coalesce', ['get', 'Architect'], '']]]
         ];
 
-        // フィルターを適用してピンを絞り込む
-        map.setFilter(layerId, filter);
+        map.setFilter('church_pins', filter);
     });
 
+    // 🖱️ クリック時のポップアップ表示（データがあるピンならどこでも反応）
+    map.on('click', (e) => {
+        const features = map.queryRenderedFeatures(e.point);
+        // NameかJPのデータを持っているピンを探す
+        const church = features.find(f => f.properties && (f.properties.Name || f.properties.JP));
 
-    // --- ここから下は前回と同じ（クリックしてポップアップを表示） ---
-    
-    map.on('click', layerId, (e) => {
-        const p = e.features[0].properties;
+        if (!church) return; // ピンがない場所なら何もしない
+
+        const p = church.properties;
 
         new mapboxgl.Popup({
             closeButton: true,
@@ -80,10 +75,10 @@ map.on('load', () => {
         .addTo(map);
     });
 
-    map.on('mouseenter', layerId, () => {
-        map.getCanvas().style.cursor = 'pointer';
-    });
-    map.on('mouseleave', layerId, () => {
-        map.getCanvas().style.cursor = '';
+    // マウスホバーでカーソルをポインターにする処理
+    map.on('mousemove', (e) => {
+        const features = map.queryRenderedFeatures(e.point);
+        const hasData = features.some(f => f.properties && (f.properties.Name || f.properties.JP));
+        map.getCanvas().style.cursor = hasData ? 'pointer' : '';
     });
 });
