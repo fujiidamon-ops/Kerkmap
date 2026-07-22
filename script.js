@@ -3,8 +3,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY2hhY2hhMzI4IiwiYSI6ImNtcWFnYTcyNDA2Z2MycnBwN
 
 const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/chacha328/cmr7bti6i004a01rd8c7eb7rk', // 👈 元のURLに戻す
-    center: [5.3, 52.1], // オランダの中心に戻す
+    style: 'mapbox://styles/chacha328/cmr7bti6i004a01rd8c7eb7rk',
+    center: [5.3, 52.1], // オランダの中心
     zoom: 7
 });
 
@@ -19,7 +19,7 @@ map.addControl(new mapboxgl.GeolocateControl({
 map.on('load', () => {
     const searchBox = document.getElementById('search-box');
 
-    // 🔍 検索・絞り込み機能（エラーを起こさない安全な実装）
+    // 🔍 検索・絞り込み機能
     searchBox.addEventListener('input', (e) => {
         const value = e.target.value.trim().toLowerCase();
 
@@ -29,7 +29,7 @@ map.on('load', () => {
             return;
         }
 
-        // エラーを回避するため、大文字小文字を区別せず部分一致させる「in」構文を採用
+        // 部分一致で検索する構文
         const filter = ['any',
             ['in', value, ['downcase', ['coalesce', ['get', 'Name'], '']]],
             ['in', value, ['downcase', ['coalesce', ['get', 'JP'], '']]],
@@ -39,13 +39,12 @@ map.on('load', () => {
         map.setFilter('church_pins', filter);
     });
 
-    // 🖱️ クリック時のポップアップ表示（データがあるピンならどこでも反応）
+    // 🖱️ クリック時のポップアップ表示
     map.on('click', (e) => {
         const features = map.queryRenderedFeatures(e.point);
-        // NameかJPのデータを持っているピンを探す
         const church = features.find(f => f.properties && (f.properties.Name || f.properties.JP));
 
-        if (!church) return; // ピンがない場所なら何もしない
+        if (!church) return;
 
         const p = church.properties;
 
