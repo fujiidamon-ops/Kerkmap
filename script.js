@@ -3,7 +3,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY2hhY2hhMzI4IiwiYSI6ImNtcWFnYTcyNDA2Z2MycnBwN
 
 const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/chacha328/cmrw3mj4j00a701rd5lbqdevi',
+    style: 'mapbox://styles/chacha328/cmr7bti6i004a01rd8c7eb7rk',
     center: [5.3, 52.1], // オランダの中心
     zoom: 7
 });
