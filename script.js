@@ -15,13 +15,18 @@ map.addControl(new mapboxgl.GeolocateControl({
     trackUserLocation: true
 }));
 
-// Studioで変更したレイヤー名を設定
-const layerId = 'church_pins';
-
 map.on('load', () => {
-    // クリック時のイベント
-    map.on('click', layerId, (e) => {
-        const p = e.features[0].properties;
+    // 【対策】特定のレイヤー名に依存せず、マップ上のすべてのレイヤーを対象にクリックイベントを設定
+    map.on('click', (e) => {
+        // クリックした位置にある地物をすべて取得
+        const features = map.queryRenderedFeatures(e.point);
+        
+        // プロパティ（CSVのデータ）を持っている地物があるか探す
+        const churchFeature = features.find(f => f.properties && (f.properties.Name || f.properties.JP));
+
+        if (!churchFeature) return; // データがない場所なら何もしない
+
+        const p = churchFeature.properties;
 
         new mapboxgl.Popup({
             closeButton: true,
@@ -32,7 +37,6 @@ map.on('load', () => {
         .setHTML(`
             <div class="popup" style="color: #333; font-family: sans-serif; padding: 5px;">
                 <h2 style="margin: 0 0 5px 0; font-size: 16px;">${p.Name || ''}</h2>
-                <!-- 項目名「JP」を表示 -->
                 <p class="jp" style="margin: 0 0 10px 0; color: #666; font-size: 14px;">${p.JP || ''}</p>
                 <hr style="border: 0; border-top: 1px solid #ccc; margin: 10px 0;">
                 <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
@@ -49,11 +53,10 @@ map.on('load', () => {
         .addTo(map);
     });
 
-    // カーソルをポインターに変更する処理
-    map.on('mouseenter', layerId, () => {
-        map.getCanvas().style.cursor = 'pointer';
-    });
-    map.on('mouseleave', layerId, () => {
-        map.getCanvas().style.cursor = '';
+    // マウスがデータ（NameかJPを持つ要素）の上に乗ったらカーソルをポインターにする
+    map.on('mousemove', (e) => {
+        const features = map.queryRenderedFeatures(e.point);
+        const hasData = features.some(f => f.properties && (f.properties.Name || f.properties.JP));
+        map.getCanvas().style.cursor = hasData ? 'pointer' : '';
     });
 });
