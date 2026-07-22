@@ -20,67 +20,42 @@ map.addControl(new mapboxgl.GeolocateControl({
 
 // ↓ここから追加
 map.on('load', () => {
+  // クリック時のイベント
+  map.on('click', 'fd42479d8f62b097d0aa(1)', (e) => {
+    const p = e.features[0].properties;
+    console.table(p);
 
-    // クリック
-    map.on('click', 'fd42479d8f62b097d0aa(1)', (e) => {
+    new mapboxgl.Popup({
+      closeButton: true,
+      closeOnClick: true,
+      maxWidth: "340px"
+    })
+    .setLngLat(e.lngLat)
+    .setHTML(`
+      <div class="popup">
+        <h2>${p.Name || ''}</h2>
+        <p class="jp">${p.JP || p.JP || ''}</p>
+        <hr>
+        <table>
+          <tr><th>City</th><td>${p.City || ''}</td></tr>
+          <tr><th>Architect</th><td>${p.Architect || ''}</td></tr>
+          <tr><th>Year</th><td>${p.Year || ''}</td></tr>
+          <tr><th>Sect</th><td>${p.Sect || ''}</td></tr>
+          <tr><th>Style</th><td>${p.Style || ''}</td></tr>
+          <tr><th>References</th><td>${p.References || ''}</td></tr>
+        </table>
+        <!-- 関連した記事（Link）に飛ぶためのボタン -->
+        ${p.Link ? `<a href="${p.Link}" target="_blank" class="button" style="display: block; text-align: center; margin-top: 10px; padding: 8px; background: #007cbf; color: white; text-decoration: none; border-radius: 4px;">Read More</a>` : ''}
+      </div>
+    `)
+    .addTo(map);
+  });
 
-        const p = e.features[0].properties;
-        console.table(p);
-new mapboxgl.Popup({
-    closeButton: true,
-    closeOnClick: true,
-    maxWidth: "320px"
-})
-.setLngLat(e.lngLat)
-.setHTML(`
-<div class="popup">
-
-    <h2>${p.Name}</h2>
-
-    <p class="jp">${p.JP}</p>
-
-    <hr>
-
-    <table>
-
-        <tr>
-            <th>City</th>
-            <td>${p.City}</td>
-        </tr>
-
-        <tr>
-            <th>Architect</th>
-            <td>${p.Architect}</td>
-        </tr>
-
-        <tr>
-            <th>Year</th>
-            <td>${p.Year}</td>
-        </tr>
-
-        <tr>
-            <th>Style</th>
-            <td>${p.Style}</td>
-        </tr>
-
-    </table>
-
-    <a href="${p.Link}" target="_blank" class="button">
-        Read More
-    </a>
-
-</div>
-`)
-.addTo(map);
-    });
-
-    // カーソル変更
-    map.on('mouseenter', 'fd42479d8f62b097d0aa(1)', () => {
-        map.getCanvas().style.cursor = 'pointer';
-    });
-
-    map.on('mouseleave', 'fd42479d8f62b097d0aa(1)', () => {
-        map.getCanvas().style.cursor = '';
-    });
-
+  // カーソルをポインターに変更する処理
+  map.on('mouseenter', 'fd42479d8f62b097d0aa(1)', () => {
+    map.getCanvas().style.cursor = 'pointer';
+  });
+  map.on('mouseleave', 'fd42479d8f62b097d0aa(1)', () => {
+    map.getCanvas().style.cursor = '';
+  });
 });
