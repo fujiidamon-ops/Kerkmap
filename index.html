@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Nederlandse Kerkkaart (Kerkmap)</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!-- Mapbox GL JS -->
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
     <style>
@@ -15,7 +16,7 @@
             position: absolute;
             top: 10px;
             left: 10px;
-            z-index: 1; /* マップより上に表示 */
+            z-index: 10; /* マップより上に表示 */
             width: 250px;
         }
         #search-box {
@@ -28,7 +29,7 @@
             outline: none; /* クリック時の青枠を消す */
         }
         
-        /* ポップアップのスタイル（前回追加分） */
+        /* ポップアップのスタイル */
         .mapboxgl-popup-content {
             padding: 15px;
             border-radius: 8px;
@@ -37,12 +38,15 @@
 </head>
 <body>
 
+<!-- 🔍 検索窓をマップの上に設置 -->
 <div class="search-container">
     <input type="text" id="search-box" placeholder="建築家、教会名で検索...">
 </div>
 
+<!-- マップを表示するコンテナ -->
 <div id="map"></div>
 
+<!-- JavaScriptファイルを読み込む -->
 <script src="script.js"></script>
 
 </body>
