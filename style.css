@@ -18,13 +18,3 @@ body { margin: 0; padding: 0; font-family: sans-serif; }
     font-size: 14px;
     outline: none;
 }
-
-/* 🗺️ 地図の背景タイル画像だけを狙い撃ちしてモノクロ化する */
-.mapboxgl-canvas-container.mapboxgl-interactive {
-    filter: grayscale(100%) contrast(90%) brightness(105%) !important;
-}
-
-/* 📌 ポップアップや検索窓はモノクロ化の影響を受けないようにリセット */
-.mapboxgl-popup, .search-container {
-    filter: grayscale(0%) !important;
-}
