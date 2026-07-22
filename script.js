@@ -51,7 +51,8 @@ map.on('load', () => {
         new mapboxgl.Popup({
             closeButton: true,
             closeOnClick: true,
-            maxWidth: "400px"
+            maxWidth: "400px",
+            focusAfterOpen: false // 👈 自動で下のボタンにフォーカスするのを防ぐ
         })
         .setLngLat(e.lngLat)
         .setHTML(`
