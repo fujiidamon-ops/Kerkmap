@@ -51,7 +51,7 @@ map.on('load', () => {
         new mapboxgl.Popup({
             closeButton: true,
             closeOnClick: true,
-            maxWidth: "340px"
+            maxWidth: "400px"
         })
         .setLngLat(e.lngLat)
         .setHTML(`
