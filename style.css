@@ -109,3 +109,6 @@ body{
     background:#163da8;
 
 }
+#map {
+    filter: grayscale(100%);
+}
