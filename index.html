@@ -29,13 +29,12 @@
             outline: none; /* クリック時の青枠を消す */
         }
         
-        /* ポップアップのスタイル */
+        /* ポップアップのスタイル（スクロール対応版） */
         .mapboxgl-popup-content {
             padding: 15px;
             border-radius: 8px;
-            height: auto !important;
-            max-height: none !important;
-            overflow: visible !important;
+            max-height: 300px !important; /* 👈 ポップアップの最大の高さを300pxに制限 */
+            overflow-y: auto !important;  /* 👈 縦に長くなったら自動でスクロールバーを出す */
         }
     </style>
 </head>
