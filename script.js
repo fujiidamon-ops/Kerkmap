@@ -34,8 +34,8 @@ map.on('load', () => {
         const filter = ['any',
             ['in', value, ['downcase', ['coalesce', ['get', 'Name'], '']]],
             ['in', value, ['downcase', ['coalesce', ['get', 'JP'], '']]],
-            ['in', value, ['downcase', ['coalesce', ['get', 'Architect'], '']]]
-            ['in', value, ['downcase', ['coalesce', ['get', 'Sect'], '']]]
+            ['in', value, ['downcase', ['coalesce', ['get', 'Architect'], '']]],
+            ['in', value, ['downcase', ['coalesce', ['get', 'Sect'], '']]],
             ['in', value, ['downcase', ['coalesce', ['get', 'Style'], '']]]
         ];
 
