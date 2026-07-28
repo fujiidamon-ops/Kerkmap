@@ -15,20 +15,6 @@ map.addControl(new mapboxgl.GeolocateControl({ positionOptions: { enableHighAccu
 // 地図の読み込みが完了したあとに実行
 map.on('load', () => {
     
-    // 🎨 CSVの Color_Group に応じてピンの色を自動で塗り分ける設定
-    map.setPaintProperty('church_pins', 'circle-color', [
-        'match',
-        ['to-string', ['get', 'Color_Group']], 
-        '1', 'hsl(302, 56%, 47%)', 
-        '2', 'hsl(302, 56%, 47%)', 
-        '3', 'hsl(69, 56%, 57%)',  
-        '4', 'hsl(266, 60%, 58%)', 
-        '5', 'hsl(29, 87%, 53%)',  
-        '6', 'hsl(144, 61%, 34%)', 
-        '7', 'hsl(302, 56%, 47%)', 
-        '8', 'hsl(302, 56%, 47%)', 
-        'hsl(302, 56%, 47%)' // どれにも当てはまらない場合のデフォルト色
-    ]);
 
     const searchBox = document.getElementById('search-box');
     
