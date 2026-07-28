@@ -1,3 +1,4 @@
+console.log("STYLE =", 'mapbox://styles/chacha328/cmr7bti6i004a01rd8c7eb7rk');
 // あなたのAccess Token
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2hhY2hhMzI4IiwiYSI6ImNtcWFnYTcyNDA2Z2MycnBwNWJ2Z2pucXkifQ.Z7dIsGQl4CeGw4HkYKh6qg';
 
