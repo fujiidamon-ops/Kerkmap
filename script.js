@@ -35,6 +35,8 @@ map.on('load', () => {
             ['in', value, ['downcase', ['coalesce', ['get', 'Name'], '']]],
             ['in', value, ['downcase', ['coalesce', ['get', 'JP'], '']]],
             ['in', value, ['downcase', ['coalesce', ['get', 'Architect'], '']]]
+            ['in', value, ['downcase', ['coalesce', ['get', 'Sect'], '']]]
+            ['in', value, ['downcase', ['coalesce', ['get', 'Style'], '']]]
         ];
 
         map.setFilter('church_pins', filter);
