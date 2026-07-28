@@ -17,6 +17,21 @@ map.addControl(new mapboxgl.GeolocateControl({
     trackUserLocation: true
 }));
 
+// CSVの Color_Group に応じてピンの色を自動で塗り分ける設定
+map.setPaintProperty('church_pins', 'circle-color', [
+  'match',
+  ['to-string', ['get', 'Color_Group']], // 文字列・数値どちらで読み込まれてもいいように変換
+  '1', 'hsl(302, 56%, 47%)', // グループ1の色
+  '2', 'hsl(302, 56%, 47%)', // グループ2の色
+  '3', 'hsl(69, 56%, 57%)',  // グループ3の色
+  '4', 'hsl(266, 60%, 58%)', // グループ4の色
+  '5', 'hsl(29, 87%, 53%)',  // グループ5の色
+  '6', 'hsl(144, 61%, 34%)', // グループ6の色
+  '7', 'hsl(302, 56%, 47%)', // グループ7の色
+  '8', 'hsl(302, 56%, 47%)', // グループ8の色
+  'hsl(302, 56%, 47%)'       // その他（当てはまらない場合）のデフォルト色
+]);
+
 map.on('load', () => {
     const searchBox = document.getElementById('search-box');
 
